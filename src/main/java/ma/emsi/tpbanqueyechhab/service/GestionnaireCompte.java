@@ -5,7 +5,7 @@
 package ma.emsi.tpbanqueyechhab.service;
 
 import jakarta.annotation.sql.DataSourceDefinition;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +26,7 @@ import ma.emsi.tpbanqueyechhab.entity.CompteBancaire;
         serverName = "localhost",
         portNumber = 3306,
         user = "root", // nom et
-        password = "fzoxy", // mot de passe que vous avez donnés lors de la création de la base de données
+        password = "test", // mot de passe que vous avez donnés lors de la création de la base de données
         databaseName = "banque",
         properties = {
             "useSSL=false",
@@ -34,7 +34,7 @@ import ma.emsi.tpbanqueyechhab.entity.CompteBancaire;
             "driverClass=com.mysql.cj.jdbc.Driver"
         }
 )
-@RequestScoped
+@ApplicationScoped
 public class GestionnaireCompte {
 
     private static final long serialVersionUID = 1L;
@@ -54,12 +54,18 @@ public class GestionnaireCompte {
     public void creerCompte(CompteBancaire c) {
         em.persist(c);
     }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public long nbComptes() {
+        TypedQuery<Long> query = em.createQuery("SELECT COUNT(c) FROM CompteBancaire c", Long.class);
+        return query.getSingleResult();
     }
 
     @Override

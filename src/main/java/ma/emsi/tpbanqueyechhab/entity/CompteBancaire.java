@@ -24,6 +24,10 @@ public class CompteBancaire implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public CompteBancaire() {
+        // Initialisation du constructeur par défaut
+    }
+
     public CompteBancaire(String nom, int solde, Long id) {
         this.nom = nom;
         this.solde = solde;
